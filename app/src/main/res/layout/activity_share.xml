@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ShareActivity">
+    tools:context=".ShareFragment">
 
     <ImageView
         android:id="@+id/imageView4"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/lucky_o" />
+        app:srcCompat="@drawable/card_bg_1" />
 
     <Button
         android:id="@+id/button_share"

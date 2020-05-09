@@ -13,15 +13,18 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_generator.*
 import java.io.File
 import java.io.FileOutputStream
@@ -29,23 +32,31 @@ import java.io.IOException
 import kotlin.random.Random
 
 
-class GeneratorActivity : AppCompatActivity() {
+class GeneratorFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_generator)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.activity_generator, container, false)
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         generate_button.setOnClickListener{
 
             val bitmap = createCard(nameEditText.text.toString(), authorEditText.text.toString())//getDrawable(R.drawable.lucky_o)?.toBitmap(1080, 1080)
-            val bitmapUri = bitmap?.store("right.png")
-            val intent = Intent(this, ShareActivity::class.java)
-            intent.putExtra("bitmapUri", bitmapUri)
-            startActivity(intent)
+            val bitmapUri = bitmap?.store("right.png", context!!)
+//            val intent = Intent(this, ShareActivity::class.java)
+//            intent.putExtra("bitmapUri", bitmapUri)
+//            startActivity(intent)
+            val params = Bundle().apply { putParcelable("bitmapUri", bitmapUri) }
+            (activity as? Parent)?.next(params)
         }
 
-        if (intent.getBooleanExtra("for_friend", false)){
+        if (arguments?.getBoolean("for_friend", false) == true){
             authorEditText.visibility = VISIBLE
         } else {
             authorEditText.visibility = GONE
@@ -67,7 +78,7 @@ class GeneratorActivity : AppCompatActivity() {
 
 
 
-        textPaint.typeface = ResourcesCompat.getFont(this, R.font.monsters_font)
+        textPaint.typeface = ResourcesCompat.getFont(context!!, R.font.monsters_font)
     }
 
 
@@ -89,11 +100,11 @@ class GeneratorActivity : AppCompatActivity() {
             R.drawable.card_bg_1
         else
             R.drawable.card_bg_3
-        val bg = getDrawable(bgRes)?.toBitmap(1080, 1080)!!
+        val bg = context!!.getDrawable(bgRes)?.toBitmap(1080, 1080)!!
         canvas.drawBitmap(bg, 0, 0, 1080, 1080)
 
         if (photo == null)
-            photo = getDrawable(R.drawable.img)?.toBitmap(1080, 1080)!!
+            photo = context!!.getDrawable(R.drawable.img)?.toBitmap(1080, 1080)!!
         photo?.let {
 //            canvas.drawBitmap(it,  300, 300, 480, 480)
 
@@ -141,7 +152,7 @@ class GeneratorActivity : AppCompatActivity() {
     }
 
 
-    private fun Bitmap.store(filename: String, dir: File = targetDirectory(), context: Context = this@GeneratorActivity): Uri? {
+    private fun Bitmap.store(filename: String, context: Context, dir: File = targetDirectory()): Uri? {
         var bmpUri: Uri? = null
         var out: FileOutputStream? = null
         try {
@@ -174,7 +185,7 @@ class GeneratorActivity : AppCompatActivity() {
     }
 
     private fun targetDirectory() : File {
-        return File("${filesDir.path}/generated").also {
+        return File("${context!!.filesDir.path}/generated").also {
             if (!it.exists())
                 it.mkdirs()
         }
@@ -186,21 +197,21 @@ class GeneratorActivity : AppCompatActivity() {
 //        photoImageView.setImageResource(R.drawable.img)
 
         // Here, thisActivity is the current activity
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity!!, Manifest.permission.CAMERA)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),
+                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CAMERA),
                     MY_PERMISSIONS_REQUEST_CAMERA)
                 // TODO
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),
+                ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CAMERA),
                     MY_PERMISSIONS_REQUEST_CAMERA)
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
