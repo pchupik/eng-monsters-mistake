@@ -51,7 +51,7 @@ captures/
 /captures
 .externalNativeBuild
 .cxx
-.idea/workspace.xml
+.idea/*
 .idea/tasks.xml
 .idea/gradle.xml
 .idea/assetWizardSettings.xml
