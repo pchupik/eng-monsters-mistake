@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:drawable="@drawable/top_left_bg"
+        android:drawable="@drawable/ellipse_cut"
         android:top="0dp"
         android:left="0dp" />
     <item
-        android:drawable="@drawable/top_left_fg"
-        android:top="0dp"
-        android:left="0dp" />
+        android:drawable="@drawable/arrows"
+        android:top="30dp"
+        android:left="50dp"
+        android:bottom="30dp"/>
 </layer-list>

@@ -15,6 +15,7 @@ import android.text.TextPaint
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -22,10 +23,10 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.android.synthetic.main.activity_generator.*
-import kotlinx.android.synthetic.main.common_bg.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.random.Random
 
 
 class GeneratorActivity : AppCompatActivity() {
@@ -34,8 +35,8 @@ class GeneratorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generator)
 
-        bottom_text.setText(R.string.generate)
-        bottom_text.setOnClickListener{
+
+        generate_button.setOnClickListener{
 
             val bitmap = createCard(nameEditText.text.toString(), authorEditText.text.toString())//getDrawable(R.drawable.lucky_o)?.toBitmap(1080, 1080)
             val bitmapUri = bitmap?.store("right.png")
@@ -45,7 +46,6 @@ class GeneratorActivity : AppCompatActivity() {
         }
 
         if (intent.getBooleanExtra("for_friend", false)){
-            bottom_text.setText("Відправити")
             authorEditText.visibility = VISIBLE
         } else {
             authorEditText.visibility = GONE
@@ -85,36 +85,51 @@ class GeneratorActivity : AppCompatActivity() {
 
         val bmp = Bitmap.createBitmap(1080, 1080, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmp)
-        canvas.drawColor(getColor(R.color.colorPrimary)) // 0xF0582E
-//        val photo = getDrawable(R.drawable.img)?.toBitmap(322, 427)!!
+        @DrawableRes val bgRes = if (Random.nextBoolean())
+            R.drawable.card_bg_1
+        else
+            R.drawable.card_bg_3
+        val bg = getDrawable(bgRes)?.toBitmap(1080, 1080)!!
+        canvas.drawBitmap(bg, 0, 0, 1080, 1080)
+
+        if (photo == null)
+            photo = getDrawable(R.drawable.img)?.toBitmap(1080, 1080)!!
         photo?.let {
-            canvas.drawBitmap(it, 660, 165, 322, 427)
+//            canvas.drawBitmap(it,  300, 300, 480, 480)
+
+            val bitmapShader = BitmapShader(
+                it,
+                Shader.TileMode.CLAMP,
+                Shader.TileMode.CLAMP
+            )
+            val paint = Paint()
+            paint.setShader(bitmapShader)
+//            canvas.drawOval(300f,300f, 800f, 740f, paint)
+            val path = Path()
+            path.moveTo(300f, 300f)
+            path.rLineTo(400f, 20f)
+            path.rLineTo(80f, 400f)
+            path.rLineTo(0f, 40f)
+            path.rLineTo(-400f, 20f)
+            path.rLineTo(-60f, -10f)
+            path.close()
+
+            canvas.drawPath(path, paint)
         }
 
-        val stamp= getDrawable(R.drawable.stamp)?.toBitmap(315, 305)!!
-        canvas.drawBitmap(stamp, 783, 440, 315,305)
-
-        canvas.drawText(name, 96f, 863f, textPaintWithSize(150f))
-        canvas.drawText("Власник", 96f, 887f + 49f, textPaintWithSize(50f).also { it.alpha = 0x80 })
-
-        canvas.drawText("Персональне", 96f, 248f + 68f, textPaintWithSize(70f))
-        canvas.drawText("Право на", 96f, 315f + 194f / 2f, textPaintWithSize(100f))
-        canvas.drawText("помилку", 96f, 315f + 194f, textPaintWithSize(100f))
+        canvas.drawText("Право на помилку", 120f, 1000f, textPaintWithSize(100f))
 
         val staticLayout = StaticLayout.Builder.obtain(
-            from,
+            "$name має",
             0,
-            from.length,
-            textPaintWithSize(50f),
-            canvas.width - 80
+            "$name має".length,
+            textPaintWithSize(100f),
+            canvas.width
         )
-            .setAlignment(Layout.Alignment.ALIGN_OPPOSITE)
+            .setAlignment(Layout.Alignment.ALIGN_CENTER)
             .build()
-        canvas.translate(0f, 983f)
+        canvas.translate(0f, 800f)
         staticLayout.draw(canvas)
-
-
-//        canvas.drawText(from, 612f, 983f + 49f, textPaintWithSize(50f))
 
         return bmp
 
@@ -238,9 +253,9 @@ class GeneratorActivity : AppCompatActivity() {
 //                photoImageView.setImageURI(selectedImage)
                 val bitmap : Bitmap? = data.extras?.get("data") as? Bitmap
 
-                val rotatedBitmap = bitmap?.let {
+                val scaledBitmap = bitmap?.let {
                     val matrix = Matrix()
-                    matrix.postRotate(-90f)
+                    matrix.postScale(1080f/it.width, 1080f/it.height)
                     Bitmap.createBitmap(
                         bitmap,
                         0,
@@ -253,8 +268,8 @@ class GeneratorActivity : AppCompatActivity() {
                 }
 
 
-                photoImageView.setImageBitmap(rotatedBitmap)
-                photo = rotatedBitmap
+                photoImageView.setImageBitmap(scaledBitmap)
+                photo = scaledBitmap
             }
         }
     }

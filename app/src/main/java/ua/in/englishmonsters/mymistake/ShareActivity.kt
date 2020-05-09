@@ -16,7 +16,7 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.android.synthetic.main.activity_share.*
-import kotlinx.android.synthetic.main.common_bg.*
+
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -28,8 +28,8 @@ class ShareActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
-        bottom_text.setText(R.string.share)
-        bottom_text.setOnClickListener{
+//        button_share.setText(R.string.share)
+        button_share.setOnClickListener{
 
             bitmapUri?.let { bitmapUri ->
                 val intent = Intent(Intent.ACTION_SEND).apply {
@@ -42,7 +42,7 @@ class ShareActivity : AppCompatActivity() {
             }
         }
 
-        bottom_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_share_24dp,0,0,0)
+//        button_share.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_share_24dp,0,0,0)
 
         bitmapUri = intent.getParcelableExtra("bitmapUri")
 
