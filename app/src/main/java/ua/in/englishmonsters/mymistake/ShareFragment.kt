@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_share.*
 
 class ShareFragment : Fragment() {
 
-
-    var bitmapUri : Uri? = null
+    private lateinit var viewModel: MistakeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +25,18 @@ class ShareFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        viewModel = ViewModelProviders.of(activity!!).get(MistakeViewModel::class.java)
+        viewModel.getCardUriData().observe(viewLifecycleOwner, Observer {
+            resultImageView.setImageDrawable(null)
+            resultImageView.setImageURI(it)
+        })
+
+
         button_share.setText(R.string.share)
         button_share.setOnClickListener{
 
-            bitmapUri?.let { bitmapUri ->
+            viewModel.getCardUriData().value?.let { bitmapUri ->
                 val intent = Intent(Intent.ACTION_SEND).apply {
                     setDataAndType(bitmapUri, "image/png")
                     putExtra(Intent.EXTRA_STREAM, bitmapUri)
@@ -38,19 +47,5 @@ class ShareFragment : Fragment() {
             }
         }
 
-//        button_share.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_share_24dp,0,0,0)
-
-        bitmapUri = arguments?.getParcelable("bitmapUri")
-
-        resultImageView.setImageURI(bitmapUri)
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser){
-            bitmapUri = arguments?.getParcelable("bitmapUri")
-
-            resultImageView.setImageURI(bitmapUri)
-        }
     }
 }

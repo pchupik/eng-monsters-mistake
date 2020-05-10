@@ -20,6 +20,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/generate_text_cut" />
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="25dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="267dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/error_cut_2" />
+
     <Button
         android:id="@+id/generate_button"
         android:layout_width="150dp"
@@ -91,6 +103,7 @@
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textSize="30sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/nameEditText"
         app:layout_constraintStart_toStartOf="@+id/nameEditText"
         app:layout_constraintTop_toBottomOf="@+id/nameEditText" />

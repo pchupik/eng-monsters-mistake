@@ -25,6 +25,8 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_generator.*
 import java.io.File
 import java.io.FileOutputStream
@@ -34,6 +36,8 @@ import kotlin.random.Random
 
 class GeneratorFragment : Fragment() {
 
+    private lateinit var viewModel: MistakeViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,153 +46,33 @@ class GeneratorFragment : Fragment() {
         return inflater.inflate(R.layout.activity_generator, container, false)
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        viewModel = ViewModelProviders.of(activity!!).get(MistakeViewModel::class.java)
+
+        viewModel.getCardData().observe(viewLifecycleOwner, Observer {
+            nameEditText.setText(it.name)
+            photoImageView.setClipToOutline(true)
+            photoImageView.setImageBitmap(it.photo)
+        })
+
         generate_button.setOnClickListener{
-
-            val bitmap = createCard(nameEditText.text.toString(), authorEditText.text.toString())//getDrawable(R.drawable.lucky_o)?.toBitmap(1080, 1080)
-            val bitmapUri = bitmap?.store("right.png", context!!)
-//            val intent = Intent(this, ShareActivity::class.java)
-//            intent.putExtra("bitmapUri", bitmapUri)
-//            startActivity(intent)
-            val params = Bundle().apply { putParcelable("bitmapUri", bitmapUri) }
-            (activity as? Parent)?.next(params)
+            viewModel.setName(nameEditText.text.toString())
+            context?.let {
+                viewModel.generate(it)
+            }
+            (activity as? Parent)?.next()
         }
 
-        if (arguments?.getBoolean("for_friend", false) == true){
-            authorEditText.visibility = VISIBLE
-        } else {
-            authorEditText.visibility = GONE
-        }
 
         photoFrameImageView.setOnClickListener {
             choosePhoto()
 
-
             photoImageView.setClipToOutline(true)
         }
 
-        authorEditText.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus && authorEditText.text.isEmpty()) {
-                authorEditText.setText("від ")
-                authorEditText.setSelection(4)
-            }
-        }
-
-
-
-        textPaint.typeface = ResourcesCompat.getFont(context!!, R.font.monsters_font)
-    }
-
-
-    val textPaint = TextPaint().apply {
-        color = Color.WHITE
-        isAntiAlias = true
-    }
-
-    fun textPaintWithSize(size: Float) = TextPaint(textPaint).apply {
-        textSize = size
-    }
-
-    var photo : Bitmap? = null
-    fun createCard(name: String, from: String) : Bitmap {
-
-        val bmp = Bitmap.createBitmap(1080, 1080, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bmp)
-        @DrawableRes val bgRes = if (Random.nextBoolean())
-            R.drawable.card_bg_1
-        else
-            R.drawable.card_bg_3
-        val bg = context!!.getDrawable(bgRes)?.toBitmap(1080, 1080)!!
-        canvas.drawBitmap(bg, 0, 0, 1080, 1080)
-
-        if (photo == null)
-            photo = context!!.getDrawable(R.drawable.img)?.toBitmap(1080, 1080)!!
-        photo?.let {
-//            canvas.drawBitmap(it,  300, 300, 480, 480)
-
-            val bitmapShader = BitmapShader(
-                it,
-                Shader.TileMode.CLAMP,
-                Shader.TileMode.CLAMP
-            )
-            val paint = Paint()
-            paint.setShader(bitmapShader)
-//            canvas.drawOval(300f,300f, 800f, 740f, paint)
-            val path = Path()
-            path.moveTo(300f, 300f)
-            path.rLineTo(400f, 20f)
-            path.rLineTo(80f, 400f)
-            path.rLineTo(0f, 40f)
-            path.rLineTo(-400f, 20f)
-            path.rLineTo(-60f, -10f)
-            path.close()
-
-            canvas.drawPath(path, paint)
-        }
-
-        canvas.drawText("Право на помилку", 120f, 1000f, textPaintWithSize(100f))
-
-        val staticLayout = StaticLayout.Builder.obtain(
-            "$name має",
-            0,
-            "$name має".length,
-            textPaintWithSize(100f),
-            canvas.width
-        )
-            .setAlignment(Layout.Alignment.ALIGN_CENTER)
-            .build()
-        canvas.translate(0f, 800f)
-        staticLayout.draw(canvas)
-
-        return bmp
-
-    }
-
-    inline fun Canvas.drawBitmap(bitmap: Bitmap, x: Int, y: Int, w: Int, h: Int){
-        val photoRect = Rect(x, y, x + w, y + h)
-        drawBitmap(bitmap,null, photoRect, null)
-    }
-
-
-    private fun Bitmap.store(filename: String, context: Context, dir: File = targetDirectory()): Uri? {
-        var bmpUri: Uri? = null
-        var out: FileOutputStream? = null
-        try {
-            val file = File(dir, filename)
-            out = FileOutputStream(file)
-            compress(Bitmap.CompressFormat.PNG, 90, out)
-            bmpUri = getFileProviderUri(context, file)
-
-        } catch (e: IOException) {
-            Log.e("ChartImage", "failed to store Bitmap", e)
-            e.printStackTrace()
-        } catch (e: IllegalArgumentException) {
-            Log.e("ChartImage", "failed to store Bitmap", e)
-            e.printStackTrace()
-        } finally {
-            out?.close()
-        }
-        return bmpUri
-    }
-
-    fun getFileProviderUri(
-        context: Context,
-        file: File?
-    ): Uri? {
-        return FileProvider.getUriForFile(
-            context,
-            context.packageName + ".provider",
-            file!!
-        )
-    }
-
-    private fun targetDirectory() : File {
-        return File("${context!!.filesDir.path}/generated").also {
-            if (!it.exists())
-                it.mkdirs()
-        }
     }
 
     val MY_PERMISSIONS_REQUEST_CAMERA = 1
@@ -279,8 +163,9 @@ class GeneratorFragment : Fragment() {
                 }
 
 
-                photoImageView.setImageBitmap(scaledBitmap)
-                photo = scaledBitmap
+//                photoImageView.setImageBitmap(scaledBitmap)
+//                photo = scaledBitmap
+                viewModel.setPhoto(scaledBitmap)
             }
         }
     }

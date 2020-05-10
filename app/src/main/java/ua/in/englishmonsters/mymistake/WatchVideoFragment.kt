@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_wise.*
 
 
-class WiseActivity : Fragment() {
+class WatchVideoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
