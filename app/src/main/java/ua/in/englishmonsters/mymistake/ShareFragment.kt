@@ -33,7 +33,6 @@ class ShareFragment : Fragment() {
         })
 
 
-        button_share.setText(R.string.share)
         button_share.setOnClickListener{
 
             viewModel.getCardUriData().value?.let { bitmapUri ->

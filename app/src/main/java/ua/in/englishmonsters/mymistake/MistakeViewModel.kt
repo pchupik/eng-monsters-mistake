@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.concurrent.Executors
 
 class MistakeViewModel : ViewModel() {
 
@@ -32,7 +33,10 @@ class MistakeViewModel : ViewModel() {
     }
 
     fun generate(context: Context){
-        cardUri.value = data.value?.generate(context)
+        Executors.newSingleThreadExecutor().submit {
+            val uri = data.value?.generate(context)
+            cardUri.postValue(uri)
+        }
     }
 
 
