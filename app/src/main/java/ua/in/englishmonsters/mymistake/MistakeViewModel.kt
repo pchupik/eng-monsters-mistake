@@ -39,7 +39,12 @@ class MistakeViewModel : ViewModel() {
         }
     }
 
-
+    fun changeBg(context: Context) {
+        data.value = data.value?.also {
+            it.bgRes = it.nextBgRes()
+        }
+        generate(context)
+    }
 
 
 }

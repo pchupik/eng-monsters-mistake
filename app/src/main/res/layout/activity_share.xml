@@ -20,22 +20,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ready_tsvi_cut" />
 
-    <ImageView
-        android:id="@+id/resultImageView"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
         android:layout_marginBottom="64dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:elevation="10dp"
+        android:elevation="15dp"
+        app:cardCornerRadius="15dp"
+        app:cardPreventCornerOverlap="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/card_bg_1" />
+        android:background="@drawable/card_bg_105"
+        >
+
+        <ImageView
+            android:id="@+id/resultImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            tools:srcCompat="@drawable/card_bg_105" />
+    </androidx.cardview.widget.CardView>
+
+
+
 
     <Button
         android:id="@+id/button_share"

@@ -11,18 +11,37 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.FileProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import kotlinx.android.synthetic.main.activity_generator.*
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import kotlin.random.Random
 
 class CardData {
 
     var name: String = ""
     @DrawableRes
-    var bgRes: Int = R.drawable.card_bg_1
+    var bgRes: Int = bgs.random()
     var photo: Bitmap? = null
+
+    companion object {
+        val bgs = listOf(
+            R.drawable.card_bg_98,
+            R.drawable.card_bg_102,
+            R.drawable.card_bg_103,
+            R.drawable.card_bg_104,
+            R.drawable.card_bg_105,
+            R.drawable.card_bg_106,
+            R.drawable.card_bg_107
+        )
+    }
+
+    fun nextBgRes(): Int {
+        return bgs[(bgs.indexOf(bgRes) + 1).let {
+            if (it < bgs.size) it
+            else 0
+        }]
+
+
+    }
 
     fun generate(context: Context) : Uri? {
         textPaint.typeface = ResourcesCompat.getFont(context, R.font.monsters_font)
@@ -44,10 +63,7 @@ class CardData {
 
         val bmp = Bitmap.createBitmap(1080, 1080, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bmp)
-        @DrawableRes val bgRes = if (Random.nextBoolean())
-            R.drawable.card_bg_1
-        else
-            R.drawable.card_bg_3
+
         val bg = context!!.getDrawable(bgRes)?.toBitmap(1080, 1080)!!
         canvas.drawBitmap(bg, 0, 0, 1080, 1080)
 

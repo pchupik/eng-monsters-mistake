@@ -46,5 +46,9 @@ class ShareFragment : Fragment() {
             }
         }
 
+        resultImageView.setOnClickListener {
+            viewModel.changeBg(context!!)
+        }
+
     }
 }
