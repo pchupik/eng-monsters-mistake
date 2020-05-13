@@ -4,41 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    tools:background="@color/background"
     tools:context=".GeneratorFragment">
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/generate_text_cut" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="25dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="267dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/error_cut_2" />
+        app:srcCompat="@drawable/generate_text" />
 
     <Button
         android:id="@+id/generate_button"
-        android:layout_width="150dp"
-        android:layout_height="109dp"
-        android:layout_marginBottom="64dp"
+        android:layout_width="100dp"
+        android:layout_height="89dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/generate_button_bg"
+        android:background="@drawable/done_button_ripple"
         android:textColor="@color/text_color"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -62,6 +50,7 @@
         android:id="@+id/photoImageView"
         android:layout_width="225dp"
         android:layout_height="300dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/photo_cut"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +63,7 @@
         android:id="@+id/photoFrameImageView"
         android:layout_width="225dp"
         android:layout_height="300dp"
+        android:layout_marginTop="8dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +73,9 @@
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:background="@drawable/name_bg"
+        android:layout_marginTop="200dp"
         android:ems="10"
         android:hint="Ім'я"
         android:inputType="textPersonName"
@@ -92,7 +84,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
     <EditText
         android:id="@+id/authorEditText"

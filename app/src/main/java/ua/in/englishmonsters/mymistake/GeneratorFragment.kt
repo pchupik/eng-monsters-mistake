@@ -2,36 +2,21 @@ package ua.`in`.englishmonsters.mymistake
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Layout
-import android.text.StaticLayout
-import android.text.TextPaint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.activity_generator.*
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import kotlin.random.Random
+import kotlinx.android.synthetic.main.fragment_generator.*
 
 
 class GeneratorFragment : Fragment() {
@@ -43,7 +28,7 @@ class GeneratorFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_generator, container, false)
+        return inflater.inflate(R.layout.fragment_generator, container, false)
     }
 
 
