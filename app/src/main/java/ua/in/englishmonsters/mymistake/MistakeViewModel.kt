@@ -46,5 +46,9 @@ class MistakeViewModel : ViewModel() {
         generate(context)
     }
 
+    fun rotate(context: Context) {
+        data.value?.rotatePhoto() // TODO move to bg
+        generate(context)
+    }
 
 }

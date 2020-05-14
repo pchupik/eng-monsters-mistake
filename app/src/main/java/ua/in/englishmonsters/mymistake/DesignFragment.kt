@@ -38,5 +38,9 @@ class DesignFragment : Fragment() {
         button_change_bg.setOnClickListener {
             viewModel.changeBg(context!!)
         }
+
+        button_rotate.setOnClickListener {
+            viewModel.rotate(context!!)
+        }
     }
 }

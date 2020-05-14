@@ -175,4 +175,19 @@ class CardData {
     fun outlinedPhoto(context: Context) : Bitmap? {
         return photo?.outlinePhoto(context)
     }
+
+    fun rotatePhoto(){
+        photo = photo?.rotateImage(90f)
+    }
+
+
+}
+
+public fun Bitmap.rotateImage(angle: Float): Bitmap? {
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(
+        this, 0, 0, width, height,
+        matrix, true
+    )
 }

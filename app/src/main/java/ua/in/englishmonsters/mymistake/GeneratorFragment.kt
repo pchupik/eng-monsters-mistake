@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -134,17 +135,20 @@ class GeneratorFragment : Fragment() {
                 val decodeFile = BitmapFactory.decodeFile(currentPhotoPath, null)
 
                 val bitmap : Bitmap? = decodeFile ?: data.extras?.get("data") as? Bitmap
-                val cropped = bitmap?.cropPhoto()
+
+                val rotatedBitmap = rotateIfNeeded(bitmap) ?: bitmap
+
+                val cropped = rotatedBitmap?.cropPhoto()
 
                 val scaledBitmap = cropped?.let {
                     val matrix = Matrix()
                     matrix.postScale(1080f/it.width, 1080f/it.height)
                     Bitmap.createBitmap(
-                        bitmap,
+                        it,
                         0,
                         0,
-                        bitmap.width,
-                        bitmap.height,
+                        it.width,
+                        it.height,
                         matrix,
                         true
                     )
@@ -153,6 +157,21 @@ class GeneratorFragment : Fragment() {
                 viewModel.setPhoto(scaledBitmap)
             }
         }
+    }
+
+    private fun rotateIfNeeded(bitmap: Bitmap?) : Bitmap? {
+        val ei = ExifInterface(currentPhotoPath)
+        val orientation: Int = ei.getAttributeInt(
+            ExifInterface.TAG_ORIENTATION,
+            ExifInterface.ORIENTATION_UNDEFINED
+        )
+        val rotatedBitmap = when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> bitmap?.rotateImage(90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> bitmap?.rotateImage(180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> bitmap?.rotateImage(270f)
+            else -> bitmap
+        }
+        return rotatedBitmap
     }
 
     private fun Bitmap.cropPhoto() : Bitmap{
