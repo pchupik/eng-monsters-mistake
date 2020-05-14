@@ -3,6 +3,7 @@ package ua.`in`.englishmonsters.mymistake
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import glimpse.core.Glimpse
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Parent {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity(), Parent {
 
         view_pager.adapter = PagerAdapter(supportFragmentManager)
 
-
+        Glimpse.init(application)
 
     }
 

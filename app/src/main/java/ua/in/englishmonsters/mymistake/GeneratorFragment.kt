@@ -16,6 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import glimpse.core.crop
+import glimpse.core.findCenter
 import kotlinx.android.synthetic.main.fragment_generator.*
 
 
@@ -39,9 +41,8 @@ class GeneratorFragment : Fragment() {
 
         viewModel.getCardData().observe(viewLifecycleOwner, Observer {
             nameEditText.setText(it.name)
-            photoImageView.setClipToOutline(true)
             if (it.photo != null)
-            photoImageView.setImageBitmap(it.photo)
+                photoImageView.setImageBitmap(it.outlinedPhoto(context!!))
         })
 
         generate_button.setOnClickListener{
@@ -55,8 +56,6 @@ class GeneratorFragment : Fragment() {
 
         photoFrameImageView.setOnClickListener {
             choosePhoto()
-
-            photoImageView.setClipToOutline(true)
         }
 
     }
@@ -98,8 +97,9 @@ class GeneratorFragment : Fragment() {
 //                selectedImage = data.data
 //                photoImageView.setImageURI(selectedImage)
                 val bitmap : Bitmap? = data.extras?.get("data") as? Bitmap
+                val cropped = bitmap?.cropPhoto()
 
-                val scaledBitmap = bitmap?.let {
+                val scaledBitmap = cropped?.let {
                     val matrix = Matrix()
                     matrix.postScale(1080f/it.width, 1080f/it.height)
                     Bitmap.createBitmap(
@@ -120,4 +120,13 @@ class GeneratorFragment : Fragment() {
             }
         }
     }
+
+    private fun Bitmap.cropPhoto() : Bitmap{
+        val bitmap = this
+        val (x, y) = bitmap.findCenter()
+        val min = kotlin.math.min(bitmap.width, bitmap.height)
+        val cropped = bitmap.crop(x, y, min, min)
+        return cropped
+    }
+
 }

@@ -37,7 +37,7 @@
     <ImageView
         android:id="@+id/photoFrameImageView"
         android:layout_width="225dp"
-        android:layout_height="300dp"
+        android:layout_height="225dp"
         android:layout_marginTop="8dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,11 +60,11 @@
     <ImageView
         android:id="@+id/photoImageView"
         android:layout_width="225dp"
-        android:layout_height="300dp"
+        android:layout_height="225dp"
         android:layout_marginTop="8dp"
         android:scaleType="fitXY"
         android:elevation="20dp"
-        tools:srcCompat="@drawable/img"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/authorEditText"

@@ -74,8 +74,8 @@ class CardData {
 
             val bitmapShader = BitmapShader(
                 it,
-                Shader.TileMode.CLAMP,
-                Shader.TileMode.CLAMP
+                Shader.TileMode.REPEAT,
+                Shader.TileMode.REPEAT
             )
             val paint = Paint()
             paint.setShader(bitmapShader)
@@ -157,5 +157,22 @@ class CardData {
             if (!it.exists())
                 it.mkdirs()
         }
+    }
+
+    private fun Bitmap.outlinePhoto(context: Context) : Bitmap {
+        val bmp = Bitmap.createBitmap(1080, 1080, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+
+        val bitmapShader = BitmapShader(this, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT)
+        val paint = Paint()
+        paint.setShader(bitmapShader)
+        val shape = context!!.getDrawable(R.drawable.ic_ellipse)?.toBitmap(1080, 1080)!!.extractAlpha()
+//        canvas.drawBitmap(shape, 0f,0f, paint)
+        canvas.drawBitmap(shape, 40, 40, 1000, 1000, paint)
+        return bmp
+    }
+
+    fun outlinedPhoto(context: Context) : Bitmap? {
+        return photo?.outlinePhoto(context)
     }
 }
