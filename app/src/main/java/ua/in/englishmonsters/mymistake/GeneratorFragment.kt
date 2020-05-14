@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
@@ -13,12 +14,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import glimpse.core.crop
 import glimpse.core.findCenter
 import kotlinx.android.synthetic.main.fragment_generator.*
+import java.io.File
+import java.io.IOException
 
 
 class GeneratorFragment : Fragment() {
@@ -84,19 +88,52 @@ class GeneratorFragment : Fragment() {
     }
 
     fun openCamera() {
-        startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), 0, null)
+        startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(context!!.packageManager)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile()
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        context!!,
+                        "ua.in.englishmonsters.mymistake.provider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                }
+            }
+        }, 0, null)
+    }
+
+    lateinit var currentPhotoPath: String
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val storageDir: File? = File("${context!!.filesDir.path}/photos").also {
+            if (!it.exists())
+                it.mkdirs()
+        }
+        return  File(storageDir, "photo.jpg").apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            var selectedImage: Uri? = null
 
             if (data != null) {
-//                selectedImage = data.data
-//                photoImageView.setImageURI(selectedImage)
-                val bitmap : Bitmap? = data.extras?.get("data") as? Bitmap
+                val decodeFile = BitmapFactory.decodeFile(currentPhotoPath, null)
+
+                val bitmap : Bitmap? = decodeFile ?: data.extras?.get("data") as? Bitmap
                 val cropped = bitmap?.cropPhoto()
 
                 val scaledBitmap = cropped?.let {
@@ -113,9 +150,6 @@ class GeneratorFragment : Fragment() {
                     )
                 }
 
-
-//                photoImageView.setImageBitmap(scaledBitmap)
-//                photo = scaledBitmap
                 viewModel.setPhoto(scaledBitmap)
             }
         }
