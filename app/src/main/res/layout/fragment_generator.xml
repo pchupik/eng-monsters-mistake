@@ -32,32 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="завантижити\nфото"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/photoFrameImageView"
-        app:layout_constraintEnd_toEndOf="@+id/photoFrameImageView"
-        app:layout_constraintStart_toStartOf="@+id/photoFrameImageView"
-        app:layout_constraintTop_toTopOf="@+id/photoFrameImageView" />
 
-    <ImageView
-        android:id="@+id/photoImageView"
-        android:layout_width="225dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/photo_cut"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/authorEditText"
-
-        />
 
     <ImageView
         android:id="@+id/photoFrameImageView"
@@ -68,8 +43,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/authorEditText"
-        app:srcCompat="@drawable/photo_frame" />
+        app:srcCompat="@drawable/photo_button" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="фото"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/photoFrameImageView"
+        app:layout_constraintEnd_toEndOf="@+id/photoFrameImageView"
+        app:layout_constraintStart_toStartOf="@+id/photoFrameImageView"
+        app:layout_constraintTop_toTopOf="@+id/photoFrameImageView" />
+    <ImageView
+        android:id="@+id/photoImageView"
+        android:layout_width="225dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitXY"
+        android:elevation="20dp"
+        tools:srcCompat="@drawable/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/authorEditText"
 
+        />
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="250dp"
