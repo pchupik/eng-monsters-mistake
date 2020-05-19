@@ -131,10 +131,9 @@ class GeneratorFragment : Fragment() {
 
         if (resultCode == Activity.RESULT_OK) {
 
-            if (data != null) {
                 val decodeFile = BitmapFactory.decodeFile(currentPhotoPath, null)
 
-                val bitmap : Bitmap? = decodeFile ?: data.extras?.get("data") as? Bitmap
+                val bitmap : Bitmap? = decodeFile ?: data?.extras?.get("data") as? Bitmap
 
                 val rotatedBitmap = rotateIfNeeded(bitmap) ?: bitmap
 
@@ -155,7 +154,6 @@ class GeneratorFragment : Fragment() {
                 }
 
                 viewModel.setPhoto(scaledBitmap)
-            }
         }
     }
 
