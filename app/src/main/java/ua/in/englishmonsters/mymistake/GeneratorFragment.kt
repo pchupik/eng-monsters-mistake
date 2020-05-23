@@ -2,6 +2,7 @@ package ua.`in`.englishmonsters.mymistake
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -14,6 +15,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -60,13 +62,29 @@ class GeneratorFragment : Fragment() {
 
 
         photoFrameImageView.setOnClickListener {
-            choosePhoto()
+            val adapter = ArrayAdapter(
+                context!!,
+                android.R.layout.simple_list_item_1,
+                listOf("Відкрити камеру", "Обрати фото")
+            )
+            AlertDialog.Builder(context!!)
+                .setAdapter(adapter) { _, which -> when(which){
+                    0 -> takePhoto()
+                    1 -> chooseFromGallery()
+                }
+                }
+                .create()
+                .show()
         }
 
     }
 
+    fun chooseFromGallery(){
+        startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).setType("image/*"), PICTURE_REQUEST_GALERY)
+    }
+
     val MY_PERMISSIONS_REQUEST_CAMERA = 1
-    private fun choosePhoto(){
+    private fun takePhoto(){
         if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.CAMERA), MY_PERMISSIONS_REQUEST_CAMERA)
         } else {
@@ -88,8 +106,15 @@ class GeneratorFragment : Fragment() {
         }
     }
 
+    val PICTURE_REQUEST_CAMERA = 2
+    val PICTURE_REQUEST_GALERY = 3
+
     fun openCamera() {
-        startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+        startActivityForResult(takePictureIntent(), PICTURE_REQUEST_CAMERA, null)
+    }
+
+    private fun takePictureIntent() =
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             takePictureIntent.resolveActivity(context!!.packageManager)?.also {
                 // Create the File where the photo should go
                 val photoFile: File? = try {
@@ -108,8 +133,8 @@ class GeneratorFragment : Fragment() {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 }
             }
-        }, 0, null)
-    }
+        }
+
 
     lateinit var currentPhotoPath: String
 
@@ -131,43 +156,49 @@ class GeneratorFragment : Fragment() {
 
         if (resultCode == Activity.RESULT_OK) {
 
-                val decodeFile = BitmapFactory.decodeFile(currentPhotoPath, null)
-
-                val bitmap : Bitmap? = decodeFile ?: data?.extras?.get("data") as? Bitmap
-
-                val rotatedBitmap = rotateIfNeeded(bitmap) ?: bitmap
-
-                val cropped = rotatedBitmap?.cropPhoto()
-
-                val scaledBitmap = cropped?.let {
-                    val matrix = Matrix()
-                    matrix.postScale(1080f/it.width, 1080f/it.height)
-                    Bitmap.createBitmap(
-                        it,
-                        0,
-                        0,
-                        it.width,
-                        it.height,
-                        matrix,
-                        true
-                    )
+            val bitmap = when (requestCode) {
+                PICTURE_REQUEST_GALERY -> data?.data?.let {
+                    context?.contentResolver?.openInputStream(it)?.let { inputStream ->
+                        BitmapFactory.decodeStream(inputStream)
+                    }
                 }
+                PICTURE_REQUEST_CAMERA -> BitmapFactory.decodeFile(currentPhotoPath, null)?.rotateIfNeeded()
+                else -> null
+            }
 
-                viewModel.setPhoto(scaledBitmap)
+            val cropped = bitmap?.cropPhoto()
+
+            val scaledBitmap = cropped?.scale()
+
+            viewModel.setPhoto(scaledBitmap)
         }
     }
 
-    private fun rotateIfNeeded(bitmap: Bitmap?) : Bitmap? {
+    private fun Bitmap.scale(): Bitmap? {
+        val matrix = Matrix()
+        matrix.postScale(1080f / width, 1080f / height)
+        return Bitmap.createBitmap(
+            this,
+            0,
+            0,
+            width,
+            height,
+            matrix,
+            true
+        )
+    }
+
+    private fun Bitmap.rotateIfNeeded() : Bitmap? {
         val ei = ExifInterface(currentPhotoPath)
         val orientation: Int = ei.getAttributeInt(
             ExifInterface.TAG_ORIENTATION,
             ExifInterface.ORIENTATION_UNDEFINED
         )
         val rotatedBitmap = when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> bitmap?.rotateImage(90f)
-            ExifInterface.ORIENTATION_ROTATE_180 -> bitmap?.rotateImage(180f)
-            ExifInterface.ORIENTATION_ROTATE_270 -> bitmap?.rotateImage(270f)
-            else -> bitmap
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(90f)
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(180f)
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(270f)
+            else -> this
         }
         return rotatedBitmap
     }
