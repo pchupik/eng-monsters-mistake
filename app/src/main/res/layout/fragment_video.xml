@@ -7,17 +7,34 @@
     android:background="@color/background"
     tools:context=".WatchVideoFragment">
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:text="дивитись"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="85sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/video_text" />
+         />
+
+    <TextView
+        android:id="@+id/textViewVideo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="відео"
+        android:textAlignment="viewStart"
+        android:textColor="@color/text_color"
+        android:textSize="85sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        />
+
 
     <Button
         android:id="@+id/toVideoButton"
@@ -40,10 +57,10 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:scaleX="-1"
-        app:layout_constraintBottom_toTopOf="@+id/toVideoButton"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewVideo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewVideo"
         app:srcCompat="@drawable/watch_tsvi_cut" />
 
     <androidx.constraintlayout.widget.Guideline

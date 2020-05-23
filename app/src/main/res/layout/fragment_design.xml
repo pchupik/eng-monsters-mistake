@@ -7,17 +7,19 @@
     tools:background="@color/background"
     tools:context=".DesignFragment">
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:layout_marginTop="8dp"
+        android:lines="1"
+        android:text="дизайн"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="110sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/design_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/address_looking_up"

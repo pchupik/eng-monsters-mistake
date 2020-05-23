@@ -7,17 +7,21 @@
     tools:background="@color/background"
     tools:context=".GeneratorFragment">
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <TextView
+        android:id="@+id/textViewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
+        android:layout_marginTop="15dp"
+        android:text="згенер\nувати"
+        android:textColor="@color/text_color"
+        android:textSize="90sp"
+        android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/generate_text" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <Button
         android:id="@+id/generate_button"
@@ -70,12 +74,13 @@
         app:layout_constraintTop_toBottomOf="@+id/authorEditText"
 
         />
+
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="250dp"
         android:layout_height="100dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/name_bg"
-        android:layout_marginTop="200dp"
         android:ems="10"
         android:hint="Ім'я"
         android:inputType="textPersonName"
@@ -84,7 +89,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <EditText
         android:id="@+id/authorEditText"
