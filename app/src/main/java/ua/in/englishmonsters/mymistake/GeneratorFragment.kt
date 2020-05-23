@@ -62,6 +62,7 @@ class GeneratorFragment : Fragment() {
 
 
         photoFrameImageView.setOnClickListener {
+            viewModel.setName(nameEditText.text.toString())
             val adapter = ArrayAdapter(
                 context!!,
                 android.R.layout.simple_list_item_1,
