@@ -25,13 +25,24 @@ class CardData {
     companion object {
         val bgs = listOf(
             R.drawable.card_bg_98,
+            R.drawable.card_bg_99_w,
             R.drawable.card_bg_102,
             R.drawable.card_bg_103,
             R.drawable.card_bg_104,
             R.drawable.card_bg_105,
             R.drawable.card_bg_106,
-            R.drawable.card_bg_107
+            R.drawable.card_bg_107,
+            R.drawable.card_bg_108
         )
+    }
+
+    private fun textColorForBg(bgRes: Int) : Int {
+        return when (bgRes){
+            R.drawable.card_bg_103 -> R.color.text_card_blue
+            R.drawable.card_bg_104 -> R.color.text_card_dark_blue
+            R.drawable.card_bg_108 -> R.color.text_card_black
+            else -> R.color.text_card_white
+        }
     }
 
     fun nextBgRes(): Int {
@@ -39,8 +50,6 @@ class CardData {
             if (it < bgs.size) it
             else 0
         }]
-
-
     }
 
     fun canGenerate() : Boolean = !(name.isEmpty() && photo == null)
@@ -67,6 +76,7 @@ class CardData {
         val canvas = Canvas(bmp)
 
         val bg = context!!.getDrawable(bgRes)?.toBitmap(1080, 1080)!!
+        textPaint.color = context!!.getColor(textColorForBg(bgRes))
         canvas.drawBitmap(bg, 0, 0, 1080, 1080)
 
         if (photo == null)

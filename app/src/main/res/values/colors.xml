@@ -7,4 +7,9 @@
     <color name="black_overlay">#66000000</color>
     <color name="text_color">#ffffff</color>
     <color name="background">@color/colorPrimary</color>
+
+    <color name="text_card_white">#ffffff</color>
+    <color name="text_card_blue">#0500FF</color>
+    <color name="text_card_dark_blue">#26003F</color>
+    <color name="text_card_black">#000000</color>
 </resources>
