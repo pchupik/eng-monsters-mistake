@@ -14,6 +14,7 @@
         android:layout_marginTop="8dp"
         android:lines="1"
         android:text="дизайн"
+        app:autoSizeTextType="uniform"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="110sp"
