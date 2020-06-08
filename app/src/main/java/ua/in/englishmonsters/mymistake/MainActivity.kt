@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), Parent {
 
         val viewModel = ViewModelProvider(this).get(MistakeViewModel::class.java)
         viewModel.getCardData().observe(this, Observer {
-            val pagerAdapter = view_pager.adapter as? PagerAdapter
+            val pagerAdapter = pagerAdapter()
             pagerAdapter?.showDesign = it.canGenerate()
             pagerAdapter?.notifyDataSetChanged()
         })
@@ -32,11 +32,21 @@ class MainActivity : AppCompatActivity(), Parent {
             (position + 1).indicatorView()?.alpha = positionOffset.toAlpha()
 
             if (position == 0) {
-                val welcomeFragment = (view_pager.adapter as? PagerAdapter)?.getItem(0)
+                val welcomeFragment = pagerAdapter()?.getItem(0)
                 (welcomeFragment as? WelcomeFragment)?.drop(positionOffset)
             }
         })
     }
+
+    override fun onBackPressed() {
+        if (view_pager.currentItem > 0 && pagerAdapter()?.getItem(view_pager.currentItem) is WatchVideoFragment){
+            view_pager.setCurrentItem(view_pager.currentItem - 1, true)
+            return
+        }
+        super.onBackPressed()
+    }
+
+    private fun pagerAdapter() = (view_pager.adapter as? PagerAdapter)
 
     override fun next(params: Bundle?) {
 
