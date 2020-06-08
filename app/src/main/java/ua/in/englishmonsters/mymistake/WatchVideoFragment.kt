@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_video.*
 
@@ -43,4 +44,11 @@ class WatchVideoFragment : Fragment() {
 //
 //        bottom_text.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_share_24dp,0,0,0)
     }
+
+    override fun onResume() {
+        super.onResume()
+        val animation = AnimationUtils.loadAnimation(context, R.anim.bounce)
+        toVideoButton.startAnimation(animation)
+    }
+
 }
