@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/background">
+
+    <ImageView
+        android:id="@+id/indicator_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_2"
+        app:layout_constraintEnd_toStartOf="@+id/indicator_2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/indicator_2"
+        app:srcCompat="@drawable/ic_active_indicator" />
+
+    <ImageView
+        android:id="@+id/indicator_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_3"
+        app:layout_constraintEnd_toStartOf="@+id/indicator_3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/indicator_1"
+        app:layout_constraintTop_toTopOf="@+id/indicator_3"
+        app:srcCompat="@drawable/ic_active_indicator" />
+
+    <ImageView
+        android:id="@+id/indicator_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_4"
+        app:layout_constraintEnd_toStartOf="@+id/indicator_4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/indicator_2"
+        app:layout_constraintTop_toTopOf="@+id/indicator_4"
+        app:srcCompat="@drawable/ic_active_indicator" />
+
+    <ImageView
+        android:id="@+id/indicator_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:alpha="0.6"
+        app:layout_constraintBottom_toBottomOf="@+id/indicator_5"
+        app:layout_constraintEnd_toStartOf="@+id/indicator_5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/indicator_3"
+        app:layout_constraintTop_toTopOf="@+id/indicator_5"
+        app:srcCompat="@drawable/ic_active_indicator" />
+
+    <ImageView
+        android:id="@+id/indicator_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:alpha="0.6"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_pager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/indicator_4"
+        app:srcCompat="@drawable/ic_active_indicator" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

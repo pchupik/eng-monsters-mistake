@@ -1,10 +1,12 @@
 package ua.`in`.englishmonsters.mymistake
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import glimpse.core.Glimpse
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity(), Parent {
             pagerAdapter?.notifyDataSetChanged()
         })
 
+        view_pager.addOnPageChangeListener( PageChangeListener { position, positionOffset ->
+            position.indicatorView()?.alpha = (1f - positionOffset).toAlpha()
+            (position + 1).indicatorView()?.alpha = positionOffset.toAlpha()
+        })
     }
 
     override fun next(params: Bundle?) {
@@ -39,4 +45,32 @@ class MainActivity : AppCompatActivity(), Parent {
             (fragment as Fragment).arguments = params
         }
     }
+
+    class PageChangeListener(val onScrolled: (position: Int, positionOffset: Float) -> Unit ) : ViewPager.OnPageChangeListener {
+        override fun onPageScrollStateChanged(state: Int) {
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            onScrolled(position, positionOffset)
+        }
+
+        override fun onPageSelected(position: Int) {
+        }
+    }
+
+    private fun Int.indicatorView() : ImageView? = when (this){
+        0 -> indicator_1
+        1 -> indicator_2
+        2 -> indicator_3
+        3 -> indicator_4
+        4 -> indicator_5
+        else -> null
+    }
+
+    private fun Float.toAlpha() : Float = 0.6f + this * 0.4f
+
 }
