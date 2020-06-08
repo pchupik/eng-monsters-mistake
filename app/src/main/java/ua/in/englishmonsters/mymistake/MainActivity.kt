@@ -30,6 +30,11 @@ class MainActivity : AppCompatActivity(), Parent {
         view_pager.addOnPageChangeListener( PageChangeListener { position, positionOffset ->
             position.indicatorView()?.alpha = (1f - positionOffset).toAlpha()
             (position + 1).indicatorView()?.alpha = positionOffset.toAlpha()
+
+            if (position == 0) {
+                val welcomeFragment = (view_pager.adapter as? PagerAdapter)?.getItem(0)
+                (welcomeFragment as? WelcomeFragment)?.drop(positionOffset)
+            }
         })
     }
 

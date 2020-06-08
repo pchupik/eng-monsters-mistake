@@ -24,4 +24,10 @@ class WelcomeFragment : Fragment() {
             (activity as? Parent)?.next()
         }
     }
+
+    fun drop(offset: Float) {
+        imageViewFallen.translationX = imageViewFallen.width * offset
+        imageViewFallen.translationY = imageViewFallen.height * 5 * offset
+        imageViewFallen.rotation = 360 * offset
+    }
 }
