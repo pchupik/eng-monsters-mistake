@@ -81,10 +81,11 @@ class CardData {
             paint.setShader(bitmapShader)
 
             val shape = context!!.getDrawable(R.drawable.ic_ellipse)?.toBitmap(1080, 1080)!!.extractAlpha()
-            canvas.drawBitmap(shape, 300, 300, 480, 480, paint)
+            val side = 1080 - 241*2
+            canvas.drawBitmap(shape, 241, 218, side, side, paint)
         }
 
-        canvas.drawText("Право на помилку", 120f, 1000f, textPaintWithSize(100f))
+        canvas.drawText("Право на помилку", 100f, 1010f, textPaintWithSize(100f))
 
         val staticLayout = StaticLayout.Builder.obtain(
             "$name має",
@@ -95,7 +96,7 @@ class CardData {
         )
             .setAlignment(Layout.Alignment.ALIGN_CENTER)
             .build()
-        canvas.translate(0f, 800f)
+        canvas.translate(0f, 810f)
         staticLayout.draw(canvas)
 
         return bmp
