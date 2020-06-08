@@ -43,6 +43,8 @@ class CardData {
 
     }
 
+    fun canGenerate() : Boolean = !(name.isEmpty() && photo == null)
+
     fun generate(context: Context) : Uri? {
         textPaint.typeface = ResourcesCompat.getFont(context, R.font.monsters_font)
         val bitmap = createCard(name, context)
@@ -68,10 +70,8 @@ class CardData {
         canvas.drawBitmap(bg, 0, 0, 1080, 1080)
 
         if (photo == null)
-            photo = context!!.getDrawable(R.drawable.img)?.toBitmap(1080, 1080)!!
+            photo = context!!.getDrawable(R.drawable.ic_ellipse)?.toBitmap(1080, 1080)!!
         photo?.let {
-//            canvas.drawBitmap(it,  300, 300, 480, 480)
-
             val bitmapShader = BitmapShader(
                 it,
                 Shader.TileMode.REPEAT,
@@ -79,18 +79,6 @@ class CardData {
             )
             val paint = Paint()
             paint.setShader(bitmapShader)
-//            canvas.drawOval(300f,300f, 800f, 740f, paint)
-//            val path = Path()
-//            path.moveTo(300f, 300f)
-//            path.rLineTo(400f, 20f)
-//            path.rLineTo(80f, 400f)
-//            path.rLineTo(0f, 40f)
-//            path.rLineTo(-400f, 20f)
-//            path.rLineTo(-60f, -10f)
-//            path.close()
-//
-//
-//            canvas.drawPath(path, paint)
 
             val shape = context!!.getDrawable(R.drawable.ic_ellipse)?.toBitmap(1080, 1080)!!.extractAlpha()
             canvas.drawBitmap(shape, 300, 300, 480, 480, paint)

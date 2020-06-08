@@ -33,9 +33,11 @@ class MistakeViewModel : ViewModel() {
     }
 
     fun generate(context: Context){
-        Executors.newSingleThreadExecutor().submit {
-            val uri = data.value?.generate(context)
-            cardUri.postValue(uri)
+        if (data.value?.canGenerate() == true) {
+            Executors.newSingleThreadExecutor().submit {
+                val uri = data.value?.generate(context)
+                cardUri.postValue(uri)
+            }
         }
     }
 
