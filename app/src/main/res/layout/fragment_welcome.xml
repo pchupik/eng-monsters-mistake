@@ -12,13 +12,14 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="160dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:lines="1"
         android:text="право"
-        android:textAlignment="viewStart"
+        android:textAlignment="viewEnd"
         android:textColor="@color/text_color"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewFallen" />
 
@@ -58,7 +59,7 @@
         android:background="@android:color/transparent"
         android:text="отримати  >>"
         android:textColor="@color/text_color"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="54dp" />
+        app:layout_constraintGuide_percent="0.87104625" />
 
     <ImageView
         android:id="@+id/imageViewFallen"
@@ -78,8 +79,6 @@
         android:layout_height="140dp"
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.71"
-        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/welcome_tsvi" />
 

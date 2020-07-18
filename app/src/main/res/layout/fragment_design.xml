@@ -79,8 +79,8 @@
 
     <Button
         android:id="@+id/button_rotate"
-        android:layout_width="100dp"
-        android:layout_height="89dp"
+        android:layout_width="@dimen/small_button_width"
+        android:layout_height="@dimen/small_button_height"
         android:layout_marginBottom="64dp"
         android:adjustViewBounds="true"
         android:background="@drawable/rotate_button_ripple"
@@ -90,8 +90,8 @@
 
     <Button
         android:id="@+id/button_change_bg"
-        android:layout_width="100dp"
-        android:layout_height="89dp"
+        android:layout_width="@dimen/small_button_width"
+        android:layout_height="@dimen/small_button_height"
         android:layout_marginBottom="64dp"
         android:adjustViewBounds="true"
         android:background="@drawable/change_bg_button_ripple"
@@ -101,8 +101,8 @@
 
     <Button
         android:id="@+id/button_done"
-        android:layout_width="100dp"
-        android:layout_height="89dp"
+        android:layout_width="@dimen/small_button_width"
+        android:layout_height="@dimen/small_button_height"
         android:layout_marginBottom="64dp"
         android:adjustViewBounds="true"
         android:background="@drawable/done_button_ripple"

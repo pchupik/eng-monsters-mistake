@@ -14,7 +14,7 @@
         android:layout_marginTop="15dp"
         android:text="згенер\nувати"
         android:textColor="@color/text_color"
-        android:textSize="90sp"
+        android:textSize="@dimen/text_size_generate"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -25,14 +25,14 @@
 
     <Button
         android:id="@+id/generate_button"
-        android:layout_width="100dp"
-        android:layout_height="89dp"
+        android:layout_width="@dimen/small_button_width"
+        android:layout_height="@dimen/small_button_height"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:adjustViewBounds="true"
         android:background="@drawable/done_button_ripple"
         android:textColor="@color/text_color"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -40,8 +40,8 @@
 
     <ImageView
         android:id="@+id/photoFrameImageView"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
+        android:layout_width="@dimen/photo_preview_size"
+        android:layout_height="@dimen/photo_preview_size"
         android:layout_marginTop="8dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,18 +56,19 @@
         android:gravity="center"
         android:text="фото"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="@+id/photoFrameImageView"
         app:layout_constraintEnd_toEndOf="@+id/photoFrameImageView"
         app:layout_constraintStart_toStartOf="@+id/photoFrameImageView"
         app:layout_constraintTop_toTopOf="@+id/photoFrameImageView" />
+
     <ImageView
         android:id="@+id/photoImageView"
-        android:layout_width="225dp"
-        android:layout_height="225dp"
+        android:layout_width="@dimen/photo_preview_size"
+        android:layout_height="@dimen/photo_preview_size"
         android:layout_marginTop="8dp"
-        android:scaleType="fitXY"
         android:elevation="20dp"
+        android:scaleType="fitXY"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +78,7 @@
 
     <EditText
         android:id="@+id/nameEditText"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/text_field_width"
         android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/name_bg"
@@ -86,7 +87,7 @@
         android:inputType="textPersonName"
         android:maxLength="11"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
@@ -99,7 +100,7 @@
         android:hint="від кого"
         android:inputType="textPersonName"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="@dimen/text_size_small"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/nameEditText"
         app:layout_constraintStart_toStartOf="@+id/nameEditText"

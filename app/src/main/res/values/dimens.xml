@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_medium">50sp</dimen>
-    <dimen name="text_size_medium_x2">100sp</dimen>
-    <dimen name="text_size_medium_x3">150sp</dimen>
+    <dimen name="text_size_small">25sp</dimen>
+    <dimen name="text_size_generate">70sp</dimen>
+
+    <dimen name="photo_preview_size">185dp</dimen>
+    <dimen name="text_field_width">205dp</dimen>
+
+    <dimen name="indicator_width">18dp</dimen>
+    <dimen name="indicator_height">15dp</dimen>
+
+    <dimen name="small_button_width">83dp</dimen>
+    <dimen name="small_button_height">74dp</dimen>
+
+    <dimen name="text_button_width">270dp</dimen>
+    <dimen name="text_button_height">91dp</dimen>
+
+    <dimen name="video_button_width">250dp</dimen>
+    <dimen name="video_button_height">205dp</dimen>
 </resources>
