@@ -30,6 +30,9 @@ class DesignFragment : Fragment() {
             resultImageView.setImageURI(it)
             result_decoration.visibility = View.VISIBLE
         })
+        viewModel.isGenerating.observe(viewLifecycleOwner, Observer {
+            progress_bar.visibility = if (it) View.VISIBLE else View.GONE
+        })
 
         button_done.setOnClickListener {
             (activity as? Parent)?.next()
