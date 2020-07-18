@@ -57,7 +57,7 @@ class CardData {
     fun generate(context: Context) : Uri? {
         textPaint.typeface = ResourcesCompat.getFont(context, R.font.monsters_font)
         val bitmap = createCard(name, context)
-        val bitmapUri = bitmap?.store("right.png", context)
+        val bitmapUri = bitmap?.store("right.jpg", context)
         return bitmapUri
     }
 
@@ -125,7 +125,7 @@ class CardData {
         try {
             val file = File(dir, filename)
             out = FileOutputStream(file)
-            compress(Bitmap.CompressFormat.PNG, 90, out)
+            compress(Bitmap.CompressFormat.JPEG, 90, out)
             bmpUri = getFileProviderUri(context, file)
 
         } catch (e: IOException) {

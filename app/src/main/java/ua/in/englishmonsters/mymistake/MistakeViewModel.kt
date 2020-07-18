@@ -12,8 +12,6 @@ class MistakeViewModel : ViewModel() {
 
     private val data: MutableLiveData<CardData> = MutableLiveData(CardData())
     private val cardUri: MutableLiveData<Uri?> = MutableLiveData()
-    private val _isGenerating: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
-    val isGenerating: LiveData<Boolean> = _isGenerating
 
     fun getCardData() : LiveData<CardData> = data
     fun getCardUriData() : LiveData<Uri?> = cardUri
@@ -35,12 +33,10 @@ class MistakeViewModel : ViewModel() {
     }
 
     fun generate(context: Context){
-        _isGenerating.value = true
         if (data.value?.canGenerate() == true) {
             Executors.newSingleThreadExecutor().submit {
                 val uri = data.value?.generate(context)
                 cardUri.postValue(uri)
-                _isGenerating.postValue(false)
             }
         }
     }
