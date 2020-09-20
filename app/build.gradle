@@ -10,8 +10,8 @@ android {
         applicationId "ua.in.englishmonsters.mymistake"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 2
-        versionName "alpha 2"
+        versionCode 3
+        versionName "beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 //        ndk {
