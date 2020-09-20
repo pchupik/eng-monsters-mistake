@@ -24,16 +24,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="64dp"
         android:elevation="15dp"
         app:cardCornerRadius="15dp"
         app:cardPreventCornerOverlap="false"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_store"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
         android:background="@drawable/card_bg_105"
         >
 
@@ -46,23 +44,22 @@
             tools:srcCompat="@drawable/card_bg_105" />
     </androidx.cardview.widget.CardView>
 
-
     <Button
         android:id="@+id/button_share"
         android:layout_width="@dimen/text_button_width"
         android:layout_height="@dimen/text_button_height"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="64dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button_bg_res"
-        android:text="@string/share"
         android:paddingEnd="50dp"
+        android:text="@string/share"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_size_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:layout_constraintTop_toBottomOf="@+id/button_store"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
@@ -79,5 +76,36 @@
         app:layout_constraintBottom_toBottomOf="@+id/button_share"
         app:layout_constraintEnd_toEndOf="@+id/button_share"
         app:layout_constraintTop_toTopOf="@+id/button_share" />
+
+    <Button
+        android:id="@+id/button_store"
+        android:layout_width="@dimen/text_button_width"
+        android:layout_height="@dimen/text_button_height"
+
+        android:adjustViewBounds="true"
+        android:background="@drawable/button_bg_res"
+        android:paddingEnd="50dp"
+        android:text="@string/store"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintBottom_toTopOf="@+id/button_share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:adjustViewBounds="true"
+
+        android:elevation="10dp"
+        android:scaleType="fitEnd"
+        app:srcCompat="@drawable/ic_store"
+        app:layout_constraintBottom_toBottomOf="@+id/button_store"
+        app:layout_constraintEnd_toEndOf="@+id/button_store"
+        app:layout_constraintTop_toTopOf="@+id/button_store" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

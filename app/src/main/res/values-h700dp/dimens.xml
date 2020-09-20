@@ -13,7 +13,7 @@
     <dimen name="small_button_height">89dp</dimen>
 
     <dimen name="text_button_width">325dp</dimen>
-    <dimen name="text_button_height">109dp</dimen>
+    <dimen name="text_button_height">104dp</dimen>
 
     <dimen name="video_button_width">300dp</dimen>
     <dimen name="video_button_height">250dp</dimen>

@@ -80,7 +80,7 @@ class CardData {
         canvas.drawBitmap(bg, 0, 0, 1080, 1080)
 
         if (photo == null)
-            photo = context!!.getDrawable(R.drawable.ic_ellipse)?.toBitmap(1080, 1080)!!
+            photo = context!!.getDrawable(R.drawable.no_photo)?.toBitmap(1080, 1080)!!
         photo?.let {
             val bitmapShader = BitmapShader(
                 it,

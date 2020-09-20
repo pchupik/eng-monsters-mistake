@@ -45,5 +45,9 @@ class ShareFragment : Fragment() {
             }
         }
 
+        button_store.setOnClickListener {
+            (activity as? Parent)?.next()
+        }
+
     }
 }
