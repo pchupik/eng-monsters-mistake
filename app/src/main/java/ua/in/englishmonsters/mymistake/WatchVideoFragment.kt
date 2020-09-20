@@ -25,7 +25,7 @@ class WatchVideoFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         toVideoButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/ELbxfz5xJVE"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/ri8rQqd5_WY"))
             startActivity(intent)
         }
 
